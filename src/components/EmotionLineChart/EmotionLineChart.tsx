@@ -1,38 +1,75 @@
-"use client"
+import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 
-import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts"
+// Function to process backend data
+interface PropData {
+  key: string;
+  value: { [timestamp: string]: string };
+}
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart"
+const processBackendData = (propData: PropData) => {
+  const sentimentMapping: { [key: string]: number } = {
+    "😍 Very Happy": 5,
+    "😄 Happy": 4,
+    "😐 Neutral": 3,
+    "🙁 Unhappy": 2,
+    "😡 Very Unhappy": 1,
+  };
 
-const chartData = [
-  { date: "2024-01-01", emotion: "😍 Very Happy", emotionValue: 5 },
-  { date: "2024-01-02", emotion: "😄 Happy", emotionValue: 4 },
-  { date: "2024-01-03", emotion: "😐 Neutral", emotionValue: 3 },
-  { date: "2024-01-04", emotion: "🙁 Unhappy", emotionValue: 2 },
-  { date: "2024-01-05", emotion: "😡 Very Unhappy", emotionValue: 1 },
-]
+  const sentimentCounts: { [key: string]: number } = {
+    "😍 Very Happy": 0,
+    "😄 Happy": 0,
+    "😐 Neutral": 0,
+    "🙁 Unhappy": 0,
+    "😡 Very Unhappy": 0,
+  };
+
+  const transformedData = Object.entries(propData.value).map(([timestamp, sentiment]) => {
+    sentimentCounts[sentiment as string] = (sentimentCounts[sentiment as string] || 0) + 1;
+
+    return {
+      timestamp: new Date(parseInt(timestamp)).toLocaleString(), // Human-readable timestamp
+      sentimentScore: sentimentMapping[sentiment as string] || 0, // Map sentiment to score
+      sentiment, // Retain original sentiment for reference
+    };
+  });
+
+  const countData = Object.entries(sentimentCounts).map(([sentiment, count]) => ({
+    sentiment,
+    count,
+  }));
+
+  return { transformedData, countData };
+};
+
+// Example Backend Data
+const propData = {
+  key: "emotionLog",
+  value: {
+    "1734015969709": "😍 Very Happy",
+    "1734015969710": "😄 Happy",
+    "1734015969711": "😐 Neutral",
+    "1734015969712": "🙁 Unhappy",
+    "1734015969713": "😡 Very Unhappy",
+    "1734015969714": "😄 Happy",
+    "1734015969715": "😄 Happy",
+    "1734015969716": "😍 Very Happy",
+    "1734015969717": "😡 Very Unhappy",
+  },
+};
+
+// Processed Data
+const { transformedData } = processBackendData(propData);
 
 const chartConfig = {
   emotionValue: {
     label: "Emotion",
     color: "hsl(var(--chart-1))",
   },
-} satisfies ChartConfig
+};
 
-export function Component() {
+export default function EmotionLineChart() {
   return (
     <Card>
       <CardHeader>
@@ -41,19 +78,10 @@ export function Component() {
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
-          <LineChart
-            accessibilityLayer
-            data={chartData}
-            margin={{
-              top: 16,
-              bottom: 16,
-              left: 24,
-              right: 24,
-            }}
-          >
+          <LineChart data={transformedData} margin={{ top: 16, bottom: 16, left: 24, right: 24 }}>
             <CartesianGrid vertical={false} strokeDasharray="3 3" />
             <XAxis
-              dataKey="date"
+              dataKey="timestamp"
               tickLine={false}
               axisLine={false}
               tickMargin={8}
@@ -75,28 +103,11 @@ export function Component() {
                 return emotions[value - 1] || value;
               }}
             />
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent hideLabel />}
-            />
-            <Line
-              dataKey="emotionValue"
-              type="linear"
-              stroke="var(--color-emotionValue)"
-              strokeWidth={2}
-              dot={false}
-            />
+            <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
+            <Line dataKey="sentimentScore" type="linear" stroke="var(--color-emotionValue)" strokeWidth={2} dot={false} />
           </LineChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="flex gap-2 font-medium leading-none">
-          Emotional changes observed over time
-        </div>
-        <div className="leading-none text-muted-foreground">
-          Based on sentiment logs for the selected dates
-        </div>
-      </CardFooter>
     </Card>
-  )
+  );
 }
