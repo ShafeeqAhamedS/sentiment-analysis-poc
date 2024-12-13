@@ -172,10 +172,10 @@ export default function EmotionLineChart() {
               <ChartTooltip cursor={false} content={<CustomTooltip />} />
               <Line
                 dataKey="sentimentScore"
-                type="linear"
-                stroke="var(--color-emotionValue)"
+                stroke="#c481e3"
                 strokeWidth={2}
                 dot={false}
+                type="monotone"
               />
             </LineChart>
           </ResponsiveContainer>

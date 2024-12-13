@@ -186,10 +186,10 @@ const PerformaceUpdate = () => {
           </div>
           <Select onValueChange={handleAgentChange} value={selectedAgent}>
             <SelectTrigger className="w-[20%]">
-              <span>{selectedAgent || "Select an agent"}</span>
+              <span>{selectedAgent || "Select agent"}</span>
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="clear">Select an agent</SelectItem>
+              <SelectItem value="clear">Select Agent</SelectItem>
               {agents.map((agent) => (
                 <SelectItem key={agent.name} value={agent.name}>
                   {agent.name}

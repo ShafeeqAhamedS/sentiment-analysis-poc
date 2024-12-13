@@ -65,9 +65,9 @@ const TicketCategorization = () => {
       <CardContent>
         <ChartContainer
           config={{
-            positive: { label: "Positive", color: "hsl(var(--chart-1))" },
-            neutral: { label: "Neutral", color: "hsl(var(--chart-2))" },
-            negative: { label: "Negative", color: "hsl(var(--chart-3))" },
+            positive: { label: "Positive", color: "#31b518" },
+            neutral: { label: "Neutral", color: "#fae71b" },
+            negative: { label: "Negative", color: "#b81209" },
           }}
           className="h-[450px] w-full"
         >
@@ -83,13 +83,13 @@ const TicketCategorization = () => {
               <Bar
                 dataKey="positive"
                 stackId="a"
-                fill="var(--color-positive)"
+                fill="#b81209"
               />
-              <Bar dataKey="neutral" stackId="a" fill="var(--color-neutral)" />
+              <Bar dataKey="neutral" stackId="a" fill="#fae71b" />
               <Bar
                 dataKey="negative"
                 stackId="a"
-                fill="var(--color-negative)"
+                fill="#31b518"
               />
             </BarChart>
           </ResponsiveContainer>
