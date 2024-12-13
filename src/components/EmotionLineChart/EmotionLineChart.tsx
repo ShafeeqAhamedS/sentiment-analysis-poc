@@ -1,5 +1,5 @@
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 
 // Function to process backend data
@@ -71,21 +71,28 @@ const chartConfig = {
 
 export default function EmotionLineChart() {
   return (
-    <Card>
+    <Card style={{ width: '900px', height: '500px' }}>
       <CardHeader>
-        <CardTitle>Line Chart - Emotions</CardTitle>
+        <CardTitle>Emotional Trends</CardTitle>
         <CardDescription>Emotional trend over time</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
-          <LineChart data={transformedData} margin={{ top: 16, bottom: 16, left: 0, right: 0 }}>
+          <LineChart
+            width={600}
+            height={100}
+            data={transformedData}
+            margin={{ top: 10, right: 10, bottom: 100, left: 10 }}
+          >
             <CartesianGrid vertical={false} strokeDasharray="3 3" />
             <XAxis
               dataKey="timestamp"
               tickLine={false}
               axisLine={false}
               tickMargin={8}
-              tickFormatter={(value) => new Date(value).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+              tickFormatter={(value) =>
+                new Date(value).toLocaleDateString("en-US", { month: "short", day: "numeric" })
+              }
             />
             <YAxis
               tickLine={false}
@@ -104,7 +111,13 @@ export default function EmotionLineChart() {
               }}
             />
             <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
-            <Line dataKey="sentimentScore" type="linear" stroke="var(--color-emotionValue)" strokeWidth={2} dot={false} />
+            <Line
+              dataKey="sentimentScore"
+              type="linear"
+              stroke="var(--color-emotionValue)"
+              strokeWidth={2}
+              dot={false}
+            />
           </LineChart>
         </ChartContainer>
       </CardContent>

@@ -1,0 +1,26 @@
+.sidebar {
+    background-color: var(--color-background-alt);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 280px;
+    transition: all 0.3s;
+  }
+  
+  .sidebar-menu-item:hover {
+    background-color: var(--color-background-hover);
+    transform: scale(1.03);
+  }
+  
+  .sidebar-menu-item-active {
+    background-color: var(--color-primary);
+    color: white;
+  }
+  .card {
+    border: 1px solid var(--color-border);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.3s ease-in-out;
+  }
+  
+  .card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
