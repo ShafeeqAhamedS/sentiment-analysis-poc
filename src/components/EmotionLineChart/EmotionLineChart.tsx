@@ -78,7 +78,7 @@ export default function EmotionLineChart() {
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
-          <LineChart data={transformedData} margin={{ top: 16, bottom: 16, left: 24, right: 24 }}>
+          <LineChart data={transformedData} margin={{ top: 16, bottom: 16, left: 0, right: 0 }}>
             <CartesianGrid vertical={false} strokeDasharray="3 3" />
             <XAxis
               dataKey="timestamp"

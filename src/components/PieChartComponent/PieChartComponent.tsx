@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { Label, Pie, PieChart } from "recharts"
+import { Label, Pie, PieChart, Cell } from "recharts"
 
 import {
   Card,
@@ -79,6 +79,9 @@ export default function SentimentChart({ sentimentData }: { sentimentData: Senti
               innerRadius={60}
               strokeWidth={5}
             >
+              {sentimentData.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={entry.fill} />
+              ))}
               <Label
                 content={({ viewBox }) => {
                   if (viewBox && "cx" in viewBox && "cy" in viewBox) {

@@ -1,15 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@layer base {
-  :root {
-    --radius: 0.5rem
-  }
-}
 
 @layer base {
   :root {
+    --radius: 0.5rem;
     --chart-1: 220, 90%, 56%; /* Change to your desired color */
+    --chart-2: 160, 60%, 45%; /* Add this line */
+    --chart-3: 30, 80%, 55%; /* Add this line */
+    --chart-4: 280, 65%, 60%; /* Add this line */
+    --chart-5: 340, 75%, 55%; /* Add this line */
     --color-emotionValue: 340, 65%, 47%; /* Change as needed */
     --color-muted: 0, 0%, 50%; /* Neutral gray for axis labels */
   }
