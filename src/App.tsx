@@ -1,5 +1,4 @@
 import DashboardComponent from './components/DashboardComponent/DashboardComponent'
-import './components/TicketCategorization/TicketCategorization.css'
 
 const App = () => {
   return (
